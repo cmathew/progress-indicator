@@ -6,6 +6,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "d3": "~3.4.11"
+    "d3": "~3.4.11",
+    "angular-latest": "~1.2.20"
   }
 }
