@@ -10,8 +10,12 @@
 		<script src="app.js" type="text/javascript"></script>		
 		
 		<script src="scripts/directives/progress-indicator.js" type="text/javascript"></script>				
+		
+		<script src="scripts/controllers/comic-controller.js" type="text/javascript"></script>			
 	</head>
 	<body>
-		<progress-indicator expected=".6" actual=".9"></progress-indicator>
+		<div ng-controller="ComicController as comicCtrl">
+			<progress-indicator expected="{{expected}}" actual="{{actual}}"></progress-indicator>
+		</div>
 	</body>
 </html>
