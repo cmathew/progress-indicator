@@ -9,18 +9,17 @@ progressApp.directive('progressIndicator', function() {
 		templateUrl: 'partials/_progress.html',
 		link: function(scope, element, attrs){
 		
-			var w = 300, h = 300, r = 150;			
+			var r = 150;			
 			var vis = d3.select(".progress-indicator")
-				.attr("width", w)
-				.attr("height", h)
 				.select(".render-group")
 					.attr("transform", "translate(" + r + "," + r + ")") //center graphics according to radius						
 				
+			var textVis = d3.select(".progress-text-container");
+					
 			var actualProgress = vis.selectAll(".actual-progress") 
 				.attr("fill", function(d, i) { return "#78C000"; });
 					
-			var circleText = vis.selectAll(".progress-number")  				
-							
+			var circleText = textVis.selectAll(".progress-percentage");
 			var actualArcThickness = 20;
 			attrs.$observe('actual', function(actual) {
 				
@@ -54,9 +53,8 @@ progressApp.directive('progressIndicator', function() {
 				expectedProgress.attr("d", arc);				
 			});		
 
-			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding
-			
-			vis.selectAll(".progress-circle")  
+			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding	
+			vis.selectAll(".progress-circle")		
 				.attr("r", progressCircleStart);
 		}
     };
