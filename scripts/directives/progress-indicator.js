@@ -16,8 +16,8 @@ progressApp.directive('progressIndicator', function() {
 				.select(".render-group")
 					.attr("transform", "translate(" + r + "," + r + ")") //move the center of the pie chart from 0, 0 to radius, radius						
 				
-			var actualProgress = vis.selectAll(".actual-progress")     //this selects all <g> elements with class slice (there aren't any yet)
-				.attr("fill", function(d, i) { return "#78C000"; } ) //set the color for each slice to be chosen from the color function defined above
+			var actualProgress = vis.selectAll(".actual-progress") 
+				.attr("fill", function(d, i) { return "#78C000"; });
 					
 			var actualArcThickness = 20;
 			attrs.$observe('actual', function(actual) {
@@ -47,7 +47,11 @@ progressApp.directive('progressIndicator', function() {
 					.endAngle(expected * 2 * Math.PI);	
 				
 				expectedProgress.attr("d", arc);				
-			});									
+			});		
+
+			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding between arcs
+			var progressCircle = vis.selectAll(".progress-circle")  
+				.attr("r", progressCircleStart);
 		}
     };
 });
