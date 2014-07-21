@@ -11,36 +11,41 @@ progressApp.directive('progressIndicator', function() {
 		
 			var w = 300, h = 300, r = 150;			
 			var vis = d3.select(".progress-indicator")
-				.attr("width", w) //set the width and height of our visualization (these will be attributes of the <svg> tag
+				.attr("width", w)
 				.attr("height", h)
 				.select(".render-group")
-					.attr("transform", "translate(" + r + "," + r + ")") //move the center of the pie chart from 0, 0 to radius, radius						
+					.attr("transform", "translate(" + r + "," + r + ")") //center graphics according to radius						
 				
 			var actualProgress = vis.selectAll(".actual-progress") 
 				.attr("fill", function(d, i) { return "#78C000"; });
 					
+			var circleText = vis.selectAll(".progress-number")  				
+							
 			var actualArcThickness = 20;
 			attrs.$observe('actual', function(actual) {
+				
 				if (isNaN(parseFloat(actual))) { return; }
 
-				var arc = d3.svg.arc() //this will create <path> elements for us using arc data
+				var arc = d3.svg.arc()
 					.outerRadius(r)
 					.innerRadius(r - actualArcThickness)			
 					.startAngle(0)
 					.endAngle(actual * 2 * Math.PI);	
 				
 				actualProgress.attr("d", arc);
+				
+				circleText.text(function(d){ return parseInt(actual * 100); })								
 			});
 
-			var expectedProgress = vis.selectAll(".expected-progress")     //this selects all <g> elements with class slice (there aren't any yet)
-				.attr("fill", function(d, i) { return "#C7E596"; } ) //set the color for each slice to be chosen from the color function defined above
+			var expectedProgress = vis.selectAll(".expected-progress")
+				.attr("fill", function(d, i) { return "#C7E596"; });
 			
 			var expectedArcStart = (r - actualArcThickness) - 5; //5px of padding between arcs
 			var expectedArcThickness = 10;			
 			attrs.$observe('expected', function(expected) {
 				if (isNaN(parseFloat(expected))) { return; }
 
-				var arc = d3.svg.arc() //this will create <path> elements for us using arc data
+				var arc = d3.svg.arc()
 					.outerRadius(expectedArcStart)
 					.innerRadius(expectedArcStart - expectedArcThickness)			
 					.startAngle(0)
@@ -49,8 +54,9 @@ progressApp.directive('progressIndicator', function() {
 				expectedProgress.attr("d", arc);				
 			});		
 
-			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding between arcs
-			var progressCircle = vis.selectAll(".progress-circle")  
+			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding
+			
+			vis.selectAll(".progress-circle")  
 				.attr("r", progressCircleStart);
 		}
     };

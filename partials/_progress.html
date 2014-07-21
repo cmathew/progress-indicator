@@ -1,7 +1,14 @@
-<svg class="progress-indicator" width="200" height="200">
+<svg class="progress-indicator" width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
 	<g class="render-group">
 		<path class="expected-progress"></path>
 		<path class="actual-progress"></path>
-		<circle class="progress-circle" fill="#F4F4F4" />		
+		<g class="circle-group" text-anchor="middle">
+			<circle class="progress-circle" fill="#F4F4F4"></circle>
+			<g class="progress-percentage">
+				<text class="progress-number"></text>			
+				<text>%</text>
+			</g>			
+			<text text-anchor="middle" fill="#888">Progress</text>
+		</g>			
 	</g>
 </svg>
