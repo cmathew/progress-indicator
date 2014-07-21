@@ -7,15 +7,11 @@ progressApp.directive('progressIndicator', function() {
             expected: "@"
         },		
 		templateUrl: 'partials/_progress.html',
-		link: function(scope, element, attrs){
-		
-			var r = 150;			
+		link: function(scope, element, attrs){		
 			var vis = d3.select(".progress-indicator")
-				.select(".render-group")
-					.attr("transform", "translate(" + r + "," + r + ")") //center graphics according to radius						
 				
-			var textVis = d3.select(".progress-text-container");
-								
+			//actual progress arc will change color
+			//as it falls behind expected progress
 			var determineProgressColor = function() {
 				var diff = attrs.expected - attrs.actual;
 				if (diff >= .5) {
@@ -27,46 +23,45 @@ progressApp.directive('progressIndicator', function() {
 				return "#78C000";
 			};
 			
-			var actualProgress = vis.selectAll(".actual-progress") 
-					
-			var circleText = textVis.selectAll(".progress-percentage");
-			var actualArcThickness = 20;
-			attrs.$observe('actual', function(actual) {
-				
-				if (isNaN(parseFloat(actual))) { return; }
-
-				var arc = d3.svg.arc()
-					.outerRadius(r)
-					.innerRadius(r - actualArcThickness)			
-					.startAngle(0)
-					.endAngle(actual * 2 * Math.PI);	
-											
-				actualProgress.attr("d", arc)
+			var createArc = function(start, thickness) {
+				//arc will be outerRadius - innerRadius pixels wide			
+				return d3.svg.arc()
+					.outerRadius(start)
+					.innerRadius(start - thickness)			
+					.startAngle(0);			
+			};
+			
+			var actualProgress = vis.selectAll(".actual-progress") 					
+			var circleText = d3.select(".progress-percentage");
+			//150 is half the size of graphic
+			//todo: magic number
+			var actualArc = createArc(150, 20);					
+			attrs.$observe('actual', function(actual) {				
+				if (isNaN(parseFloat(actual))) { return; }	
+				//update arc length	and color
+				actualArc.endAngle(actual * 2 * Math.PI);
+				actualProgress.attr("d", actualArc)
 					.attr("fill", function(d, i) { return determineProgressColor(); });					
-				
+				//show actual progress as a integer percentage
 				circleText.text(function(d){ return parseInt(actual * 100); })								
 			});
 
+			//draw code for expected arc
 			var expectedProgress = vis.selectAll(".expected-progress")
 				.attr("fill", function(d, i) { return "#C7E596"; });
-			
-			var expectedArcStart = (r - actualArcThickness) - 5; //5px of padding between arcs
-			var expectedArcThickness = 10;			
+			//5px of padding between arcs
+			var expectedArc = createArc(actualArc.innerRadius()() - 5, 10);				
 			attrs.$observe('expected', function(expected) {
 				if (isNaN(parseFloat(expected))) { return; }
-
-				var arc = d3.svg.arc()
-					.outerRadius(expectedArcStart)
-					.innerRadius(expectedArcStart - expectedArcThickness)			
-					.startAngle(0)
-					.endAngle(expected * 2 * Math.PI);	
-				
-				expectedProgress.attr("d", arc);	
-
+				//update expected arc length
+				expectedArc.endAngle(expected * 2 * Math.PI);					
+				expectedProgress.attr("d", expectedArc);	
+				//update actual arc color
 				actualProgress.attr("fill", function(d, i) { return determineProgressColor(); });	
 			});		
 
-			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding	
+			//circle should be a little smaller than innermost arc
+			var progressCircleStart = expectedArc.innerRadius()() - 5;
 			vis.selectAll(".progress-circle")		
 				.attr("r", progressCircleStart);
 		}

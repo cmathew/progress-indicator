@@ -1,12 +1,13 @@
 <div class="progress-indicator">
 	<svg class="progress-indicator" xmlns="http://www.w3.org/2000/svg" version="1.1" width="300px" height="300px">
-		<g class="render-group">
+		<g class="render-group" transform="translate(150, 150)">
 			<path class="expected-progress"></path>
 			<path class="actual-progress"></path>	
 			<circle class="progress-circle" fill="#F4F4F4"></circle>
 		</g>
 	</svg>
 
+	<!-- needed layout features not found in SVG text tag -->
 	<div class="progress-text-container">
 		<div class="progress-percentage"></div>			
 		<div class="progress-label">Progress</div>
