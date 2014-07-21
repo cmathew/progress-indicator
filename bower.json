@@ -1,0 +1,11 @@
+{
+  "name": "progress-indicator",
+  "version": "0.0.0",
+  "authors": [
+    "cmathew <chris.w.mathew@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "d3": "~3.4.11"
+  }
+}
