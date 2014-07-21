@@ -15,9 +15,19 @@ progressApp.directive('progressIndicator', function() {
 					.attr("transform", "translate(" + r + "," + r + ")") //center graphics according to radius						
 				
 			var textVis = d3.select(".progress-text-container");
-					
+								
+			var determineProgressColor = function() {
+				var diff = attrs.expected - attrs.actual;
+				if (diff >= .5) {
+					return "#b10";
+				}
+				else if (diff >= .25) {
+					return "#f60";			
+				}					
+				return "#78C000";
+			};
+			
 			var actualProgress = vis.selectAll(".actual-progress") 
-				.attr("fill", function(d, i) { return "#78C000"; });
 					
 			var circleText = textVis.selectAll(".progress-percentage");
 			var actualArcThickness = 20;
@@ -30,8 +40,9 @@ progressApp.directive('progressIndicator', function() {
 					.innerRadius(r - actualArcThickness)			
 					.startAngle(0)
 					.endAngle(actual * 2 * Math.PI);	
-				
-				actualProgress.attr("d", arc);
+											
+				actualProgress.attr("d", arc)
+					.attr("fill", function(d, i) { return determineProgressColor(); });					
 				
 				circleText.text(function(d){ return parseInt(actual * 100); })								
 			});
@@ -50,7 +61,9 @@ progressApp.directive('progressIndicator', function() {
 					.startAngle(0)
 					.endAngle(expected * 2 * Math.PI);	
 				
-				expectedProgress.attr("d", arc);				
+				expectedProgress.attr("d", arc);	
+
+				actualProgress.attr("fill", function(d, i) { return determineProgressColor(); });	
 			});		
 
 			var progressCircleStart = expectedArcStart - expectedArcThickness - 5; //5px of padding	

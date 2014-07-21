@@ -1,0 +1,32 @@
+.progress-indicator {
+	position: relative;
+	width: 300px;
+}
+.progress-text-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	
+	font-family: 'Open Sans', sans-serif;
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;	
+}
+
+.progress-percentage {
+	color: #555;
+	font-size: 72px;	
+}
+.progress-percentage:after {
+	font-size: 24px;	
+	content: "%";
+}
+.progress-label {
+	color: #888;
+	margin-top: -20px;
+	font-size: 30px;
+}
