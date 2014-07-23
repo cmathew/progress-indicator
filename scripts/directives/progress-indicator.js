@@ -7,9 +7,10 @@ progressApp.directive('progressIndicator', function() {
             expected: "@"
         },		
 		templateUrl: 'partials/_progress.html',
-		link: function(scope, element, attrs){		
-			var vis = d3.select(".progress-indicator")
-				
+		link: function(scope, element, attrs){	
+			//wrap root element of directive in d3 object
+			var root = d3.select(element[0]);
+
 			//actual progress arc will change color
 			//as it falls behind expected progress
 			var determineProgressColor = function() {
@@ -29,10 +30,13 @@ progressApp.directive('progressIndicator', function() {
 					.outerRadius(start)
 					.innerRadius(start - thickness)			
 					.startAngle(0);			
-			};
+			};			
 			
-			var actualProgress = vis.selectAll(".actual-progress") 					
-			var circleText = d3.select(".progress-percentage");
+			var vis = root.selectAll('.progress-vis-container');			
+			var actualProgress = vis.selectAll('.actual-progress');
+						
+			var text = root.selectAll('.progress-text-container');				
+			var circleText = text.selectAll('.progress-percentage');
 			//150 is half the size of graphic
 			//todo: magic number
 			var actualArc = createArc(150, 20);					
