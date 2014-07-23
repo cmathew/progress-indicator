@@ -41,7 +41,7 @@ progressApp.directive('progressIndicator', function() {
 				actualProgress.attr('d', actualArc)
 					.attr('data-download-health', function() { return determineProgressColor(); });					
 				//show actual progress as a integer percentage
-				circleText.text(function(){ return parseInt(actual * 100); });							
+				circleText.text(function(){ return parseInt(actual * 100, 10); });							
 			});
 
 			//draw code for expected arc
