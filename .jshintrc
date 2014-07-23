@@ -60,5 +60,5 @@
     "browser"       : true,     // Web Browser (window, document, etc)
 
     // Custom Globals
-    "predef"       : ["progressApp"]        // additional predefined global variables
+    "predef"       : ["progressApp", "d3"]        // additional predefined global variables
 }

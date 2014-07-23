@@ -10,10 +10,10 @@ progressApp.directive('progressIndicator', function() {
 			//as it falls behind expected progress
 			var determineProgressColor = function() {
 				var diff = attrs.expected - attrs.actual;
-				if (diff >= .5) {					
+				if (diff >= 0.5) {					
 					return "very-weak";
 				}
-				else if (diff >= .25) {
+				else if (diff >= 0.25) {
 					return "weak";			
 				}					
 				return "good";
@@ -40,14 +40,13 @@ progressApp.directive('progressIndicator', function() {
 				//update arc length	and color
 				actualArc.endAngle(actual * 2 * Math.PI);
 				actualProgress.attr("d", actualArc)
-					.attr("data-download-health", function(d, i) { return determineProgressColor(); });					
+					.attr("data-download-health", function() { return determineProgressColor(); });					
 				//show actual progress as a integer percentage
-				circleText.text(function(d){ return parseInt(actual * 100); })								
+				circleText.text(function(){ return parseInt(actual * 100); });							
 			});
 
 			//draw code for expected arc
-			var expectedProgress = vis.selectAll(".expected-progress")
-				.attr("fill", function(d, i) { return "#C7E596"; });
+			var expectedProgress = vis.selectAll('.expected-progress');				
 			//5px of padding between arcs
 			var expectedArc = createArc(actualArc.innerRadius()() - 5, 10);				
 			attrs.$observe('expected', function(expected) {
@@ -56,7 +55,7 @@ progressApp.directive('progressIndicator', function() {
 				expectedArc.endAngle(expected * 2 * Math.PI);					
 				expectedProgress.attr("d", expectedArc);	
 				//update actual arc color
-				actualProgress.attr("fill", function(d, i) { return determineProgressColor(); });	
+				actualProgress.attr("fill", function() { return determineProgressColor(); });	
 			});		
 
 			//circle should be a little smaller than innermost arc

@@ -7,12 +7,16 @@
 	fill: #78C000;
 }
 [data-download-health=weak] {
-	fill: #f60;
+	fill: #F60;
 }
 [data-download-health=very-weak] {
-	fill: #b10;
+	fill: #B10;
 }
 
+.expected-progress {
+	fill: #C7E596;
+}
+ 
 .progress-text-container {
 	display: flex;
 	align-items: center;
