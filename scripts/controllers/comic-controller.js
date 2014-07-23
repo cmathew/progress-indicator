@@ -1,10 +1,9 @@
-progressApp.controller('ComicController', ['$scope', function ($scope) {
-	setInterval(function(){
+progressApp.controller('ComicController', ['$scope', '$interval', function ($scope, $interval) {
+	/* use strict */
+	$interval(function(){
 		//randomly change actual and expected progress values
 		//for demonstration purposes
-		$scope.$apply(function(){
-			$scope.actual = Math.random();		
-			$scope.expected = Math.random();					
-		});
+		$scope.actual = Math.random();		
+		$scope.expected = Math.random();					
 	}, 1000);
 }]);
