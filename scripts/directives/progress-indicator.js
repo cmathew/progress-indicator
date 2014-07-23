@@ -2,10 +2,6 @@ progressApp.directive('progressIndicator', function() {
 	return {
 		restrict: 'E',	
 		replace: true,
-        scope: {
-            actual: "@",
-            expected: "@"
-        },		
 		templateUrl: 'partials/_progress.html',
 		link: function(scope, element, attrs){	
 			//wrap root element of directive in d3 object
