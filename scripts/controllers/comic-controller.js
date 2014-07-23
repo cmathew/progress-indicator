@@ -1,5 +1,4 @@
 progressApp.controller('ComicController', ['$scope', '$interval', function ($scope, $interval) {
-	/* use strict */
 	$interval(function(){
 		//randomly change actual and expected progress values
 		//for demonstration purposes
