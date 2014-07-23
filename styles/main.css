@@ -2,6 +2,17 @@
 	position: relative;
 	width: 300px;
 }
+
+[data-download-health=good] {
+	fill: #78C000;
+}
+[data-download-health=weak] {
+	fill: #f60;
+}
+[data-download-health=very-weak] {
+	fill: #b10;
+}
+
 .progress-text-container {
 	display: flex;
 	align-items: center;

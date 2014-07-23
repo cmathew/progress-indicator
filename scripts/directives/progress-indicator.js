@@ -10,18 +10,17 @@ progressApp.directive('progressIndicator', function() {
 		link: function(scope, element, attrs){	
 			//wrap root element of directive in d3 object
 			var root = d3.select(element[0]);
-
 			//actual progress arc will change color
 			//as it falls behind expected progress
 			var determineProgressColor = function() {
 				var diff = attrs.expected - attrs.actual;
-				if (diff >= .5) {
-					return "#b10";
+				if (diff >= .5) {					
+					return "very-weak";
 				}
 				else if (diff >= .25) {
-					return "#f60";			
+					return "weak";			
 				}					
-				return "#78C000";
+				return "good";
 			};
 			
 			var createArc = function(start, thickness) {
@@ -45,7 +44,7 @@ progressApp.directive('progressIndicator', function() {
 				//update arc length	and color
 				actualArc.endAngle(actual * 2 * Math.PI);
 				actualProgress.attr("d", actualArc)
-					.attr("fill", function(d, i) { return determineProgressColor(); });					
+					.attr("data-download-health", function(d, i) { return determineProgressColor(); });					
 				//show actual progress as a integer percentage
 				circleText.text(function(d){ return parseInt(actual * 100); })								
 			});
