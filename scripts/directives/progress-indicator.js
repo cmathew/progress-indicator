@@ -11,12 +11,12 @@ progressApp.directive('progressIndicator', function() {
 			var determineProgressColor = function() {
 				var diff = attrs.expected - attrs.actual;
 				if (diff >= 0.5) {					
-					return "very-weak";
+					return 'very-weak';
 				}
 				else if (diff >= 0.25) {
-					return "weak";			
+					return 'weak';
 				}					
-				return "good";
+				return 'good';
 			};
 			
 			var createArc = function(start, thickness) {
@@ -28,8 +28,7 @@ progressApp.directive('progressIndicator', function() {
 			};			
 			
 			var vis = root.selectAll('.progress-vis-container');			
-			var actualProgress = vis.selectAll('.actual-progress');
-						
+			var actualProgress = vis.selectAll('.actual-progress');					
 			var text = root.selectAll('.progress-text-container');				
 			var circleText = text.selectAll('.progress-percentage');
 			//150 is half the size of graphic
@@ -39,8 +38,8 @@ progressApp.directive('progressIndicator', function() {
 				if (isNaN(parseFloat(actual))) { return; }	
 				//update arc length	and color
 				actualArc.endAngle(actual * 2 * Math.PI);
-				actualProgress.attr("d", actualArc)
-					.attr("data-download-health", function() { return determineProgressColor(); });					
+				actualProgress.attr('d', actualArc)
+					.attr('data-download-health', function() { return determineProgressColor(); });					
 				//show actual progress as a integer percentage
 				circleText.text(function(){ return parseInt(actual * 100); });							
 			});
@@ -53,15 +52,15 @@ progressApp.directive('progressIndicator', function() {
 				if (isNaN(parseFloat(expected))) { return; }
 				//update expected arc length
 				expectedArc.endAngle(expected * 2 * Math.PI);					
-				expectedProgress.attr("d", expectedArc);	
+				expectedProgress.attr('d', expectedArc);
 				//update actual arc color
-				actualProgress.attr("fill", function() { return determineProgressColor(); });	
+				actualProgress.attr('data-download-health', function() { return determineProgressColor(); });	
 			});		
 
 			//circle should be a little smaller than innermost arc
 			var progressCircleStart = expectedArc.innerRadius()() - 5;
-			vis.selectAll(".progress-circle")		
-				.attr("r", progressCircleStart);
+			vis.selectAll('.progress-circle')
+				.attr('r', progressCircleStart);
 		}
     };
 });
