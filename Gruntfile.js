@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 		},
 		jasmine: {
 			options: {
+				specs: 'spec/**/*.js',
 				version: '~2.0.0'
 			}
 		}
